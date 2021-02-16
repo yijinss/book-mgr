@@ -1,8 +1,8 @@
-import { defineComponent } from 'vue';
-import { UserOutlined } from '@ant-design/icons-vue';
-import { UnlockOutlined } from '@ant-design/icons-vue';
-import { MailOutlined } from '@ant-design/icons-vue';
-<MailOutlined />
+import { defineComponent, reactive } from 'vue';
+import { UserOutlined,UnlockOutlined,MailOutlined } from '@ant-design/icons-vue';
+import { auth } from '@/service';
+
+
 export default defineComponent({
   components: {
     UserOutlined,
@@ -11,6 +11,18 @@ export default defineComponent({
   },
 
   setup() {
-    
+    const regForm = reactive({
+      account: '',
+      password: '',
+    })
+
+    const register = () => {
+      auth.register(regForm.account, regForm.password);
+    } 
+
+    return {
+      regForm,
+      register,
+    }
   }
 })
