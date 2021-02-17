@@ -3,8 +3,6 @@
     <a-card>
       <h2>图书列表</h2>
       <a-divider></a-divider>
-      
-
       <space-between>
         <div class="search">
           <a-input-search placeholder="根据书名搜索" enter-button/>
