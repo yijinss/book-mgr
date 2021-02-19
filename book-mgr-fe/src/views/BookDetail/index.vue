@@ -1,0 +1,89 @@
+<template>
+  <div>
+    <a-card>
+      <space-between>
+        <h2>{{ d.name }}</h2>
+        <div>
+          <a-button size='small' type='primary' @click="showUpdateModel=true">编辑</a-button>
+          &nbsp;
+          <a-button size='small' type='danger' @click="remove">删除</a-button>
+        </div>
+      </space-between>
+      <a-divider></a-divider>
+
+      <div class="base-info">
+        <div class="items">
+          <div class="item">
+            <div class="title">价格</div>
+            <div class="content">{{ d.price }}</div>
+          </div>
+           <div class="item">
+            <div class="title">作者</div>
+            <div class="content">{{ d.author }}</div>
+          </div>
+           <div class="item">
+            <div class="title">分类</div>
+            <div class="content">{{ d.classify }}</div>
+          </div>
+        </div>
+        <div class="items">
+          <div class="item">
+            <div class="title">出版日期</div>
+            <div class="content">{{ formatTimestamp(d.publishDate) }}</div>
+          </div>
+        </div>
+      </div>
+    </a-card>
+    <div class="log">
+      <a-card title="出入库日志">
+       <template #extra>
+         <span>
+          <a href="javascript:;" @click="logFilter('IN_COUNT')">
+           <CheckOutlined v-if="curLogType === 'IN_COUNT'" />
+            入库日志
+            </a>
+         </span>
+         <span style="margin-left: 24px;">
+            <a href="javascript:;" @click="logFilter('OUT_COUNT')">
+              <CheckOutlined v-if="curLogType === 'OUT_COUNT'" />
+              出库日志
+            </a>
+         </span>
+         
+        </template>
+         <div>
+           <a-table 
+            bordered 
+            :pagination='false' 
+            :data-source='log' 
+            :columns='columns'
+          >
+          <template #createdAt='{record}'>
+              {{ formatTimestamp(record.meta.createdAt) }}
+          </template>
+          </a-table>
+         </div>
+         <space-between style="margin-top: 24px;">
+           <div/>
+           <a-pagination
+              style="margin-top: 20px;"
+              v-model:current="logCurPage" 
+              :total="logTotal " 
+              :page-size='10' 
+              @change='setLogPage'
+            />
+         </space-between>
+      </a-card>
+    </div>
+    <update 
+      v-model:show='showUpdateModel' 
+      :book='d' 
+      @update='update'></update>
+  </div>
+</template>
+
+<script src='./index.js'></script>
+
+<style lang="scss">
+  @import './index.scss'
+</style>
